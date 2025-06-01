@@ -50,22 +50,10 @@ app.get('/oauth/callback', async (req, res) => {
     console.log('🔄 REFRESH TOKEN:', refresh_token);
     console.log(`⏱️  Expires in: ${expires_in}s`);
 
-    // OPTIONAL: Try a test call (e.g., list your hubs)
-    const hubsRes = await axios.get('https://developer.api.autodesk.com/project/v1/hubs', {
-      headers: {
-        Authorization: `Bearer ${access_token}`
-      }
-    });
-
-    // console.log('\n🧩 Hubs:', JSON.stringify(hubsRes.data, null, 2));
-
-    console.log('now attempting to download Fusion files...');
     await downloadFusionFiles(access_token);
 
     res.send(`
-      <h1>✅ Auth Complete</h1>
-      <p>You can now use your access token to fetch data.</p>
-      <pre>${JSON.stringify(hubsRes.data, null, 2)}</pre>
+      <h1>✅ Download Complete!</h1>
     `);
 
   } catch (err) {
